@@ -39,6 +39,8 @@ Bundled in `@Resources/Fonts/` and auto-loaded by Rainmeter at skin load time (n
 - **Visualiser**: `Update=0` → `33` (~30 FPS, fixes stutter on busy systems; `Update=0` was clamped to 60 FPS and saturated CPU with 48 bands)
 - **Visualiser**: `AverageSize=6` → `3` (halves the smoothing window from ~200ms to ~100ms — bars track beats more tightly)
 - **Visualiser**: `FreqMin=65` → `30` (extends to sub-bass / kick-drum range; redistributes 48 bands so leftmost bars now respond to 30–65 Hz)
+- **DA_yilin**: Fixed `move.lua` bug — `color()` function targeted meter name `'text'` (lowercase) but the .ini meter is `[Text]`; `!SetOption` is case-sensitive so the bang silently failed and text stayed solid white. Restored the intended alpha-fade animation
+- **DA_yilin**: Added rainbow color cycle synchronized with the alpha fade. Lua tracks a `colorPhase` (advances by 0.015 per Update ≈ 12.6s per full hue rotation), computes RGB via three 120°-offset sin waves, and writes: text gradient = complementary halo (edges) + primary color (center), and symbol `ImageTint` = primary color (matches text center)
 - **All .ini files**: Encoded as UTF-16 LE with BOM (Rainmeter requirement — UTF-8 causes garbled non-ASCII text)
 - Added `[Metadata]` blocks to Clock and Visualiser for consistency with DA_yilin
 - Added `Variables.inc` placeholder for user customization

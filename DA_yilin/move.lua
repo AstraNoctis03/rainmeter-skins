@@ -7,6 +7,7 @@ function Initialize()
 	k = -1
 	n = 39
 	height=220
+	colorPhase = 0
 end
 
 function Update()
@@ -54,8 +55,15 @@ function color( ... )
 		c1 = 155-k/(n+1)*2.1*155
 		c2 = 255-k/(n+1)*2.1*255
 	end
-	co = 'GradientColor | 0 | 255,255,255,'..c1..' ; 0.0 | 255,255,255,'..c2..' ; 0.5| 255,255,255,'..c1..' ;1.0'
-		SKIN:Bang(SeO, 'text', 'InlineSetting' ,co)
+	colorPhase = colorPhase + 0.015
+	local r = math.floor(math.sin(colorPhase) * 127 + 128)
+	local g = math.floor(math.sin(colorPhase + 2.0944) * 127 + 128)
+	local b = math.floor(math.sin(colorPhase + 4.1888) * 127 + 128)
+	local rgbMain = r..','..g..','..b
+	local rgbComp = (255-r)..','..(255-g)..','..(255-b)
+	co = 'GradientColor | 0 | '..rgbComp..','..c1..' ; 0.0 | '..rgbMain..','..c2..' ; 0.5 | '..rgbComp..','..c1..' ; 1.0'
+		SKIN:Bang(SeO, 'Text', 'InlineSetting' ,co)
+		SKIN:Bang(SeO, 'Pic', 'ImageTint' ,rgbMain)
 end
 
 function textchange( ... )
